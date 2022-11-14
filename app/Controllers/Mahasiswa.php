@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\MahasiswaModel;
 
+helper('mahasiswa');
 class Mahasiswa extends BaseController {
     protected $mahasiswaModel;
     
@@ -30,9 +31,9 @@ class Mahasiswa extends BaseController {
             'validation' => \Config\Services::validation()
         ];
 
-        // if(empty($data['mahasiswa'])) {
-        //     throw new \CodeIgniter\Exceptions\PageNotFoundException('NPM ' . $npm . ' is not found.');
-        // }
+        if(empty($data['mahasiswa'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('NPM ' . $npm . ' is not found.');
+        }
         
         return view('mahasiswa/edit', $data);
     }
@@ -88,9 +89,9 @@ class Mahasiswa extends BaseController {
 
         $this->mahasiswaModel->save([
             'npm' => $npm,
-            'nama' => $this->request->getVar('nama'),
-            'jurusan' => $this->request->getVar('jurusan'),
-            'fakultas' => $this->request->getVar('fakultas'),
+            'nama' => capitalizeFirst($this->request->getVar('nama')),
+            'jurusan' => capitalizeFirst($this->request->getVar('jurusan')),
+            'fakultas' => capitalizeFirst($this->request->getVar('fakultas')),
             'hp' => $this->request->getVar('hp'),
             'email' => $npm . '@student.upnjatim.ac.id'
         ]);
@@ -154,9 +155,9 @@ class Mahasiswa extends BaseController {
 
         $this->mahasiswaModel->save([
             'npm' => $this->request->getVar('npm'),
-            'nama' => $this->request->getVar('nama'),
-            'jurusan' => $this->request->getVar('jurusan'),
-            'fakultas' => $this->request->getVar('fakultas'),
+            'nama' => capitalizeFirst($this->request->getVar('nama')),
+            'jurusan' => capitalizeFirst($this->request->getVar('jurusan')),
+            'fakultas' => capitalizeFirst($this->request->getVar('fakultas')),
             'hp' => $this->request->getVar('hp'),
             'email' => $this->request->getVar('npm') . '@student.upnjatim.ac.id',
         ]);
